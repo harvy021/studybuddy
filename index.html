@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>StudyBuddy — Rule-Based Chatbot</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>StudyBuddy</h1>
+      <p>Your rule-based study & productivity assistant</p>
+    </header>
+
+    <main>
+      <section class="chat-window">
+        <div class="messages">
+          {% for sender, msg in chat %}
+            <div class="message {{ 'user' if sender=='You' else 'bot' }}">
+              <div class="meta">{{ sender }}</div>
+              <div class="text">{{ msg.replace('\n','<br>')|safe }}</div>
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+
+      <form method="POST" class="chat-form">
+        <input name="message" placeholder="Ask for a study plan, subject help, or motivation..." autocomplete="off" required />
+        <button type="submit">Send</button>
+        <a class="clear" href="{{ url_for('clear') }}">Clear</a>
+      </form>
+    </main>
+
+    <footer>
+      <small>Tip: Try "Give me a 2 hour study plan for physics" or "Explain Pythagoras".</small>
+    </footer>
+  </div>
+</body>
+</html>
